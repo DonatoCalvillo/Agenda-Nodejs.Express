@@ -5,9 +5,14 @@ const { check } = require( 'express-validator' );
 const { traerUsuarios, 
     traerUsuario, 
     crearUsuario,
-    borrarUsuario
+    borrarUsuario,
+    actualizarUsuario
 } = require('../controllers');
-const { validarCampos } = require('../middlewares')
+
+const { validarCampos, 
+    validarJWT
+} = require('../middlewares');
+
 const { usuarioPorIdExiste, emailExiste } = require('../helpers');
 
 const router = new Router();
@@ -27,7 +32,14 @@ router.post( '/', [
     validarCampos
 ] , crearUsuario );
 
+router.put( '/:id', [
+    validarJWT,
+    check( 'id' ).custom( usuarioPorIdExiste ),
+    validarCampos
+], actualizarUsuario );
+
 router.delete( '/:id', [
+    validarJWT,
     check('id').custom(usuarioPorIdExiste),
     validarCampos
 ] , borrarUsuario );

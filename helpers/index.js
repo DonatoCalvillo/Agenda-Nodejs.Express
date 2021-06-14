@@ -1,5 +1,7 @@
-const dbValidator = require('./db-validator');
+const dbValidator = require( './db-validator' );
+const generarJWT = require( './generar-jwt' );
 
 module.exports = {
-    ...dbValidator
+    ...dbValidator,
+    ...generarJWT
 }
